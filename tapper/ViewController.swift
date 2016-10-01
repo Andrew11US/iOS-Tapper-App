@@ -9,17 +9,83 @@
 import UIKit
 
 class ViewController: UIViewController {
+ 
+    //Properties
+    var maxTaps = 0
+    var currentTaps = 0
+    
+    
+//Outlets
+    @IBOutlet weak var logoImg: UIImageView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBOutlet weak var playButton: UIButton!
+
+    @IBOutlet weak var howManyTapsTxt: UITextField!
+    
+    @IBOutlet weak var tapButton: UIButton!
+    
+    @IBOutlet weak var tapsLbl: UILabel!
+    
+//Actions
+    
+    @IBAction func onPlayButtonPressed(sender: AnyObject) {
+        
+       
+        
+        if howManyTapsTxt.text != nil && howManyTapsTxt.text != "" {
+            
+            logoImg.hidden = true
+            playButton.hidden = true
+            howManyTapsTxt.hidden = true
+            
+            tapButton.hidden = false
+            tapsLbl.hidden = false
+            
+            maxTaps = Int(howManyTapsTxt.text!)!
+            currentTaps = 0
+            
+            updateTapsLabel()
+            
+            
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func coinButtonPressed(sender: AnyObject) {
+        
+        currentTaps += 1
+        
+        updateTapsLabel()
+        
+        if isGameOver() {
+            restartGame()
+        }
     }
-
-
+    
+    func restartGame() {
+        maxTaps = 0
+        howManyTapsTxt.text = ""
+        
+        logoImg.hidden = false
+        playButton.hidden = false
+        howManyTapsTxt.hidden = false
+        
+        tapButton.hidden = true
+        tapsLbl.hidden = true
+        
+    }
+    
+    func isGameOver() -> Bool {
+        if currentTaps >= maxTaps {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func updateTapsLabel() {
+        tapsLbl.text = "\(currentTaps) Taps"
+    }
+    
+    
 }
 
